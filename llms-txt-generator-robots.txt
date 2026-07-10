@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sara-mbl.github.io/llms-txt-generator/sitemap.xml
