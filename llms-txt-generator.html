@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>llms.txt Generator – Create an llms.txt File for Your Website Free</title>
+<meta name="description" content="Free browser-based llms.txt generator. Paste your robots.txt, sitemap.xml, and page source to instantly create a structured llms.txt file for AI answer engines like ChatGPT, Claude, and Perplexity. No signup, nothing uploaded.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Sara Bustamante">
+<link rel="canonical" href="https://sara-mbl.github.io/llms-txt-generator/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="llms.txt Generator – Create an llms.txt File for Your Website">
+<meta property="og:description" content="Free browser-based tool that turns your robots.txt, sitemap.xml, and page source into a spec-compliant llms.txt file, following the llmstxt.org standard.">
+<meta property="og:url" content="https://sara-mbl.github.io/llms-txt-generator/">
+<meta property="og:site_name" content="llms.txt Generator">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="llms.txt Generator – Create an llms.txt File for Your Website">
+<meta name="twitter:description" content="Free browser-based tool that turns your robots.txt, sitemap.xml, and page source into a spec-compliant llms.txt file, following the llmstxt.org standard.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "llms.txt Generator",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "description": "Free browser-based tool that generates a spec-compliant llms.txt file from a site's robots.txt, sitemap.xml, and page source HTML, following the llmstxt.org standard for AI answer engine optimization.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Sara Bustamante",
+    "url": "https://github.com/sara-mbl/"
+  },
+  "url": "https://sara-mbl.github.io/llms-txt-generator/"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12151a;
+    --panel: #1a1f26;
+    --panel-2: #20262e;
+    --border: #2b323b;
+    --text: #e6e9ed;
+    --text-dim: #8b94a1;
+    --accent: #1769ff;
+    --accent-light: #5b9dff;
+    --accent-dim: #5b9dff;
+    --ok: #6fcf97;
+    --warn: #f2994a;
+    --err: #eb5757;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.5;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:40px 24px 80px;}
+
+  header.top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:1px solid var(--border);
+    padding-bottom:20px;
+    margin-bottom:8px;
+  }
+  .brandmark{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--accent-light);
+    letter-spacing:0.02em;
+  }
+  h1{
+    font-family:var(--mono);
+    font-size:28px;
+    font-weight:600;
+    margin:6px 0 4px;
+    letter-spacing:-0.01em;
+  }
+  h1 .dim{color:var(--text-dim); font-weight:400;}
+  .tagline{color:var(--text-dim); font-size:16px; margin-bottom:0;}
+
+  .fileTab{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--text-dim);
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    padding:4px 10px;
+    border-radius:4px 4px 0 0;
+    display:inline-block;
+  }
+
+  section.block{
+    margin-top:36px;
+  }
+  section.block > .label{
+    font-family:var(--mono);
+    font-size:16px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--text-dim);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  section.block > .label .num{
+    color:var(--accent-light);
+  }
+
+  details.howto{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:2px 18px;
+    margin-bottom:20px;
+  }
+  details.howto summary{
+    cursor:pointer;
+    padding:14px 0;
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--accent-light);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  details.howto summary::-webkit-details-marker{display:none;}
+  details.howto summary::before{
+    content:"▸";
+    display:inline-block;
+    transition:transform .15s ease;
+  }
+  details.howto[open] summary::before{transform:rotate(90deg);}
+  .howto-body{padding:0 0 18px; font-size:16px; color:var(--text-dim);}
+  .howto-body h4{color:var(--text); font-size:16px; margin:16px 0 6px; font-family:var(--mono);}
+  .howto-body h4:first-child{margin-top:0;}
+  .howto-body code{
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    padding:1px 6px;
+    border-radius:4px;
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--accent-light);
+  }
+  .howto-body ol{padding-left:20px; margin:6px 0;}
+  .howto-body li{margin-bottom:4px;}
+
+  textarea{
+    width:100%;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:16px;
+    line-height:1.5;
+    padding:14px;
+    resize:vertical;
+    min-height:110px;
+  }
+  textarea::placeholder{color:var(--text-dim);}
+  textarea:focus{outline:none; border-color:var(--accent-dim);}
+
+  input[type=text]{
+    width:100%;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:6px;
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:16px;
+    line-height:1.5;
+    padding:9px 12px;
+  }
+  input[type=text]:focus{outline:none; border-color:var(--accent-dim);}
+  input[type=text]::placeholder{color:var(--text-dim);}
+
+  .pageCard{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .pageCard .row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .pageCard .row .idx{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--text-dim);
+    min-width:20px;
+  }
+  .removeBtn{
+    background:none;
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:16px;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .removeBtn:hover{border-color:var(--err); color:var(--err);}
+
+  .btnRow{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;}
+
+  button.ghost{
+    background:none;
+    border:1px dashed var(--border);
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:16px;
+    padding:10px 16px;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  button.ghost:hover{border-color:var(--accent-dim); color:var(--accent-light);}
+
+  button.primary{
+    background:var(--accent);
+    border:1px solid var(--accent);
+    color:#ffffff;
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:16px;
+    line-height:1.5;
+    padding:13px 22px;
+    border-radius:6px;
+    cursor:pointer;
+    letter-spacing:0.01em;
+  }
+  button.primary:hover{background:#4d94ff;}
+  button.primary:active{transform:translateY(1px);}
+
+  button.secondary{
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:16px;
+    padding:13px 18px;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  button.secondary:hover{border-color:var(--text-dim);}
+
+  .generateBar{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:30px;
+    padding-top:24px;
+    border-top:1px solid var(--border);
+  }
+
+  .warnings{
+    margin-top:18px;
+  }
+  .warnItem{
+    display:flex;
+    gap:10px;
+    background:#241d13;
+    border:1px solid #4a3a1a;
+    color:#f2c987;
+    font-size:16px;
+    padding:10px 14px;
+    border-radius:6px;
+    margin-bottom:8px;
+  }
+  .warnItem .dot{color:var(--warn); flex-shrink:0;}
+  .okItem{
+    display:flex;
+    gap:10px;
+    background:#132018;
+    border:1px solid #1f4230;
+    color:#9adfb6;
+    font-size:16px;
+    padding:10px 14px;
+    border-radius:6px;
+    margin-bottom:8px;
+  }
+
+  .outputWrap{
+    margin-top:18px;
+    display:none;
+  }
+  .outputWrap.show{display:block;}
+  .codeFrame{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .codeFrame .bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 14px;
+    border-bottom:1px solid var(--border);
+    background:var(--panel-2);
+  }
+  .codeFrame .bar .name{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--text-dim);
+  }
+  .codeFrame pre{
+    margin:0;
+    padding:18px;
+    font-family:var(--mono);
+    font-size:16px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    word-break:break-word;
+    max-height:520px;
+    overflow:auto;
+  }
+  .actionRow{display:flex; gap:10px;}
+  .actionRow button{
+    background:none;
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:16px;
+    padding:6px 12px;
+    border-radius:5px;
+    cursor:pointer;
+  }
+  .actionRow button:hover{border-color:var(--accent-dim); color:var(--accent-light);}
+
+  .credit{
+    margin-top:40px;
+    font-size:16px;
+    color:var(--text-dim);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+    border-top:1px solid var(--border);
+    padding-top:16px;
+  }
+  .credit a{color:var(--accent-light); text-decoration:none;}
+  .credit a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <div class="fileTab">llms.txt</div>
+      <h1>llms.txt <span class="dim">generator</span></h1>
+      <p class="tagline">Free browser-based tool to create an llms.txt file for your website — paste your source, generate, download. Nothing leaves your browser.</p>
+    </div>
+  </header>
+
+  <p style="max-width:640px; color:var(--text-dim); font-size:16px; line-height:1.5; margin:0 0 8px;">
+    This tool builds a spec-compliant <code style="font-family:var(--mono); background:var(--panel-2); border:1px solid var(--border); padding:1px 6px; border-radius:4px;">llms.txt</code> file — a structured, machine-readable summary of your site designed for AI answer engines, voice assistants, and generative search tools (ChatGPT, Claude, Perplexity, and similar) to read and cite accurately, following the <a href="https://llmstxt.org" target="_blank" style="color:var(--accent-light);">llmstxt.org</a> standard.
+  </p>
+
+  <section class="block">
+    <details class="howto">
+      <summary>How to get robots.txt, sitemap.xml, and page source</summary>
+      <div class="howto-body">
+        <h4>robots.txt</h4>
+        <ol>
+          <li>Visit <code>https://yoursite.com/robots.txt</code> directly in a browser tab.</li>
+          <li>Select all (Cmd/Ctrl+A), copy, paste into the box below.</li>
+          <li>If the page 404s, the site has no robots.txt — that's fine, leave it blank.</li>
+        </ol>
+
+        <h4>sitemap.xml</h4>
+        <ol>
+          <li>Check the bottom of the robots.txt you just copied — look for a line starting with <code>Sitemap:</code>. Visit that URL.</li>
+          <li>If there's no such line, try <code>https://yoursite.com/sitemap.xml</code> directly.</li>
+          <li>Select all, copy, paste into the sitemap box below. If the site uses a sitemap index (a sitemap of sitemaps), paste the index — the tool only reads <code>&lt;loc&gt;</code> entries, so nested sitemaps won't be expanded automatically.</li>
+        </ol>
+
+        <h4>Page source HTML (for every page you want documented)</h4>
+        <ol>
+          <li>Open the page in Chrome/Firefox/Edge.</li>
+          <li>Right-click anywhere on the page → <strong>View Page Source</strong> (or go to <code>view-source:https://yoursite.com/page</code> directly in the address bar).</li>
+          <li>Select all (Cmd/Ctrl+A), copy the entire HTML.</li>
+          <li>Click "+ Add page" below, paste the HTML, and fill in the page's actual URL in the field above it.</li>
+          <li>Repeat for every important page — home, about, contact, pricing, key product/service pages. Skip pages that don't add new information.</li>
+        </ol>
+        <p style="margin-top:14px;">Note: "View Page Source" (not "Inspect") gives you what the server actually sent, which is what this tool needs. Don't use browser dev tools' live DOM view — copy the raw source.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">01</span> robots.txt <span style="color:var(--text-dim); text-transform:none; letter-spacing:0;">(optional)</span></div>
+    <textarea id="robotsInput" placeholder="Paste the full contents of robots.txt here..."></textarea>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">02</span> sitemap.xml <span style="color:var(--text-dim); text-transform:none; letter-spacing:0;">(optional, used to cross-check pages)</span></div>
+    <textarea id="sitemapInput" placeholder="Paste the full contents of sitemap.xml here..."></textarea>
+  </section>
+
+  <section class="block">
+    <div class="label"><span class="num">03</span> Page source (one block per page)</div>
+    <div id="pageList"></div>
+    <button class="ghost" id="addPageBtn" type="button">+ Add page</button>
+  </section>
+
+  <div class="generateBar">
+    <button class="primary" id="generateBtn" type="button">Generate llms.txt</button>
+    <span style="font-family:var(--mono); font-size:16px; color:var(--text-dim);" id="statusLine"></span>
+  </div>
+
+  <div class="warnings" id="warningsBox"></div>
+
+  <div class="outputWrap" id="outputWrap">
+    <div class="codeFrame">
+      <div class="bar">
+        <span class="name">llms.txt</span>
+        <div class="actionRow">
+          <button id="copyBtn" type="button">Copy</button>
+          <button id="downloadBtn" type="button">Download</button>
+        </div>
+      </div>
+      <pre id="outputPre"></pre>
+    </div>
+  </div>
+
+  <div class="credit">
+    <span>llms.txt generator created by Sara Bustamante · file structure based on <a href="https://llmstxt.org" target="_blank">llmstxt.org</a></span>
+    <span><a href="https://github.com/sara-mbl/" target="_blank">GitHub</a> · <a href="https://www.linkedin.com/in/sarambl/" target="_blank">LinkedIn</a></span>
+  </div>
+</div>
+
+<script>
+(function(){
+
+  const pageList = document.getElementById('pageList');
+  let pageCount = 0;
+
+  function addPageBlock(url, html){
+    pageCount++;
+    const id = pageCount;
+    const card = document.createElement('div');
+    card.className = 'pageCard';
+    card.dataset.id = id;
+    card.innerHTML = `
+      <div class="row">
+        <span class="idx">#${id}</span>
+        <input type="text" class="pageUrl" placeholder="https://yoursite.com/this-exact-page" value="${url||''}">
+        <button class="removeBtn" type="button">Remove</button>
+      </div>
+      <textarea class="pageHtml" placeholder="Paste full page source (View Page Source) here...">${html||''}</textarea>
+    `;
+    card.querySelector('.removeBtn').addEventListener('click', ()=> card.remove());
+    pageList.appendChild(card);
+  }
+
+  document.getElementById('addPageBtn').addEventListener('click', ()=> addPageBlock());
+  addPageBlock(); // start with one
+
+  // ---------- Parsing helpers ----------
+
+  function parseRobots(text){
+    const result = { sitemaps: [], disallow: [] };
+    if(!text || !text.trim()) return result;
+    const lines = text.split('\n').map(l=>l.trim());
+    lines.forEach(line=>{
+      const sm = line.match(/^Sitemap:\s*(\S+)/i);
+      if(sm) result.sitemaps.push(sm[1]);
+      const da = line.match(/^Disallow:\s*(\S+)/i);
+      if(da) result.disallow.push(da[1]);
+    });
+    return result;
+  }
+
+  function parseSitemap(text){
+    const urls = [];
+    if(!text || !text.trim()) return urls;
+    try{
+      const doc = new DOMParser().parseFromString(text, 'text/xml');
+      const errNode = doc.querySelector('parsererror');
+      if(errNode) return urls;
+      doc.querySelectorAll('url loc, sitemap loc, loc').forEach(n=>{
+        const v = n.textContent.trim();
+        if(v && !urls.includes(v)) urls.push(v);
+      });
+    }catch(e){}
+    return urls;
+  }
+
+  function extractJsonLd(doc){
+    const out = [];
+    doc.querySelectorAll('script[type="application/ld+json"]').forEach(s=>{
+      try{
+        const parsed = JSON.parse(s.textContent);
+        const arr = Array.isArray(parsed) ? parsed : [parsed];
+        arr.forEach(obj=>{
+          if(obj['@graph'] && Array.isArray(obj['@graph'])){
+            obj['@graph'].forEach(g=>out.push(g));
+          } else {
+            out.push(obj);
+          }
+        });
+      }catch(e){}
+    });
+    return out;
+  }
+
+  function findBusinessLike(jsonLdObjs){
+    const candidates = [];
+    jsonLdObjs.forEach(obj=>{
+      if(!obj || typeof obj !== 'object') return;
+      const type = (obj['@type']||'');
+      const typeStr = Array.isArray(type) ? type.join(' ') : String(type);
+      if(/LocalBusiness|Organization|Restaurant|Store|ProfessionalService/i.test(typeStr)){
+        candidates.push(obj);
+      }
+      if(obj.about && typeof obj.about === 'object'){
+        const t2 = obj.about['@type']||'';
+        if(/LocalBusiness|Organization|Restaurant|Store|ProfessionalService/i.test(Array.isArray(t2)?t2.join(' '):String(t2))){
+          candidates.push(obj.about);
+        }
+      }
+      if(obj.mainEntity && typeof obj.mainEntity === 'object'){
+        const t3 = obj.mainEntity['@type']||'';
+        if(/LocalBusiness|Organization|Restaurant|Store|ProfessionalService/i.test(Array.isArray(t3)?t3.join(' '):String(t3))){
+          candidates.push(obj.mainEntity);
+        }
+      }
+    });
+    return candidates;
+  }
+
+  function formatAddress(addr){
+    if(!addr || typeof addr !== 'object') return null;
+    const parts = [addr.streetAddress, addr.addressLocality, addr.addressRegion, addr.postalCode].filter(Boolean);
+    let str = parts.join(', ');
+    if(addr.addressCountry) str += (str? ', ' : '') + addr.addressCountry;
+    return str || null;
+  }
+
+  const DAY_ABBR = {Mo:'Monday',Tu:'Tuesday',We:'Wednesday',Th:'Thursday',Fr:'Friday',Sa:'Saturday',Su:'Sunday'};
+  const DAY_ORDER = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+  function to12h(t){
+    const m = t.match(/^(\d{1,2}):(\d{2})/);
+    if(!m) return t;
+    let h = parseInt(m[1],10);
+    const min = m[2];
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if(h===0) h = 12;
+    return `${h}:${min}${ampm==='AM'?'am':'pm'}`;
+  }
+
+  function formatOpeningHoursString(arr){
+    return arr.map(entry=>{
+      const m = entry.match(/^([A-Za-z-]+)\s+([\d:]+)-([\d:]+)/);
+      if(!m) return entry;
+      const dayPart = m[1];
+      const open = to12h(m[2]);
+      const close = to12h(m[3]);
+      let dayLabel;
+      if(dayPart.includes('-')){
+        const [a,b] = dayPart.split('-');
+        dayLabel = `${DAY_ABBR[a]||a}–${DAY_ABBR[b]||b}`;
+      } else {
+        dayLabel = DAY_ABBR[dayPart]||dayPart;
+      }
+      return `${dayLabel}: ${open}–${close}`;
+    });
+  }
+
+  function formatOpeningHoursSpec(specs){
+    const groups = [];
+    specs.forEach(spec=>{
+      let days = spec.dayOfWeek;
+      if(!days) return;
+      days = Array.isArray(days) ? days : [days];
+      days = days.map(d=> d.replace(/^https?:\/\/schema\.org\//,''));
+      groups.push({days, opens: spec.opens, closes: spec.closes});
+    });
+    return groups.map(g=>{
+      const sorted = g.days.slice().sort((a,b)=>DAY_ORDER.indexOf(a)-DAY_ORDER.indexOf(b));
+      let label;
+      if(sorted.length > 1){
+        const idxs = sorted.map(d=>DAY_ORDER.indexOf(d));
+        const contiguous = idxs.every((v,i)=> i===0 || v === idxs[i-1]+1);
+        label = contiguous ? `${sorted[0]}–${sorted[sorted.length-1]}` : sorted.join(', ');
+      } else {
+        label = sorted[0];
+      }
+      return `${label}: ${to12h(g.opens)}–${to12h(g.closes)}`;
+    });
+  }
+
+  function extractActionLinks(rawHtml){
+    const keywords = ['order','reserve','book','shop','menu','reservation','tickets','schedule'];
+    const found = [];
+    const linkRe = /<a\s[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+    let m;
+    while((m = linkRe.exec(rawHtml)) !== null){
+      const href = m[1];
+      const text = m[2].replace(/<[^>]+>/g,'').trim();
+      if(!href || href.startsWith('#') || href.startsWith('javascript:')) continue;
+      const hay = (href + ' ' + text).toLowerCase();
+      if(keywords.some(k=>hay.includes(k))){
+        found.push({href, text: text || href});
+      }
+    }
+    const seen = new Set();
+    return found.filter(f=>{
+      if(seen.has(f.href)) return false;
+      seen.add(f.href);
+      return true;
+    });
+  }
+
+  function firstSentence(str, maxLen){
+    if(!str) return '';
+    let s = str.trim().replace(/\s+/g,' ');
+    const m = s.match(/^(.{0,220}?[.!?])(\s|$)/);
+    if(m) s = m[1];
+    if(s.length > maxLen) s = s.slice(0, maxLen-1).trim() + '…';
+    return s;
+  }
+
+  // ---------- Main generate ----------
+
+  document.getElementById('generateBtn').addEventListener('click', function(){
+    const statusLine = document.getElementById('statusLine');
+    const warningsBox = document.getElementById('warningsBox');
+    const outputWrap = document.getElementById('outputWrap');
+    const outputPre = document.getElementById('outputPre');
+    warningsBox.innerHTML = '';
+    outputWrap.classList.remove('show');
+
+    const robotsText = document.getElementById('robotsInput').value;
+    const sitemapText = document.getElementById('sitemapInput').value;
+    const robots = parseRobots(robotsText);
+    const sitemapUrls = parseSitemap(sitemapText);
+
+    const pageCards = Array.from(document.querySelectorAll('.pageCard'));
+    const pages = [];
+    pageCards.forEach(card=>{
+      const url = card.querySelector('.pageUrl').value.trim();
+      const html = card.querySelector('.pageHtml').value;
+      if(!html.trim()) return;
+      pages.push({url, html});
+    });
+
+    const warnings = [];
+
+    if(pages.length === 0){
+      warnings.push('No page source provided. Paste at least one page\'s HTML source to generate anything.');
+      renderWarnings(warnings);
+      return;
+    }
+
+    const parsedPages = pages.map(p=>{
+      const doc = new DOMParser().parseFromString(p.html, 'text/html');
+      const title = (doc.querySelector('title')?.textContent || '').trim();
+      const metaDesc = (doc.querySelector('meta[name="description"]')?.getAttribute('content') || '').trim();
+      const ogUrl = doc.querySelector('meta[property="og:url"]')?.getAttribute('content');
+      const canonical = doc.querySelector('link[rel="canonical"]')?.getAttribute('href');
+      const jsonLd = extractJsonLd(doc);
+      const businessObjs = findBusinessLike(jsonLd);
+      const resolvedUrl = p.url || ogUrl || canonical || '';
+      const actionLinks = extractActionLinks(p.html);
+      return {url: resolvedUrl, title, metaDesc, jsonLd, businessObjs, actionLinks};
+    });
+
+    if(sitemapUrls.length){
+      const pastedUrls = parsedPages.map(p=>p.url).filter(Boolean);
+      const missingFromSubmission = sitemapUrls.filter(u => !pastedUrls.some(pu => pu.replace(/\/$/,'') === u.replace(/\/$/,'')));
+      if(missingFromSubmission.length){
+        warnings.push(`Sitemap lists ${missingFromSubmission.length} page(s) not included here: ${missingFromSubmission.slice(0,5).join(', ')}${missingFromSubmission.length>5?', …':''}. Consider adding them for a fuller file.`);
+      }
+      const notInSitemap = pastedUrls.filter(pu => !sitemapUrls.some(u => u.replace(/\/$/,'') === pu.replace(/\/$/,'')));
+      if(notInSitemap.length){
+        warnings.push(`${notInSitemap.length} pasted page(s) aren't listed in the sitemap: ${notInSitemap.join(', ')}. Double check these URLs are correct/canonical.`);
+      }
+    } else {
+      warnings.push('No sitemap.xml provided — pages were not cross-checked for completeness.');
+    }
+
+    if(robots.disallow.length){
+      parsedPages.forEach(p=>{
+        if(!p.url) return;
+        robots.disallow.forEach(rule=>{
+          if(rule === '/') { warnings.push(`robots.txt disallows the entire site ("Disallow: /"). Crawlers/LLMs may be blocked from indexing anything.`); return; }
+          try{
+            const path = new URL(p.url).pathname;
+            if(rule && path.startsWith(rule)){
+              warnings.push(`robots.txt "Disallow: ${rule}" appears to block ${p.url}.`);
+            }
+          }catch(e){}
+        });
+      });
+    }
+    if(!robotsText.trim()){
+      warnings.push('No robots.txt provided — skipped crawl-permission check.');
+    }
+
+    const fields = ['name','description','telephone','priceRange'];
+    const fieldValues = {};
+    fields.forEach(f=>fieldValues[f]=new Map());
+    const addressValues = new Map();
+    const hoursSets = [];
+    const sameAsLinks = new Set();
+
+    parsedPages.forEach(p=>{
+      p.businessObjs.forEach(b=>{
+        fields.forEach(f=>{
+          if(b[f]){
+            const val = String(b[f]).trim();
+            if(!fieldValues[f].has(val)) fieldValues[f].set(val, []);
+            fieldValues[f].get(val).push(p.url || '(unlabeled page)');
+          }
+        });
+        if(b.address){
+          const a = formatAddress(b.address);
+          if(a){
+            if(!addressValues.has(a)) addressValues.set(a, []);
+            addressValues.get(a).push(p.url || '(unlabeled page)');
+          }
+        }
+        if(b.openingHours){
+          const arr = Array.isArray(b.openingHours) ? b.openingHours : [b.openingHours];
+          hoursSets.push({type:'string', data: arr, page: p.url});
+        }
+        if(b.openingHoursSpecification){
+          const arr = Array.isArray(b.openingHoursSpecification) ? b.openingHoursSpecification : [b.openingHoursSpecification];
+          hoursSets.push({type:'spec', data: arr, page: p.url});
+        }
+        if(b.sameAs){
+          const arr = Array.isArray(b.sameAs) ? b.sameAs : [b.sameAs];
+          arr.forEach(s=>sameAsLinks.add(s));
+        }
+      });
+    });
+
+    fields.forEach(f=>{
+      if(fieldValues[f].size > 1){
+        const parts = Array.from(fieldValues[f].entries()).map(([val,pgs])=> `"${val}" (${pgs.join(', ')})`);
+        warnings.push(`Inconsistent "${f}" across schema: ${parts.join(' vs ')}.`);
+      }
+    });
+    if(addressValues.size > 1){
+      const parts = Array.from(addressValues.entries()).map(([val,pgs])=> `"${val}" (${pgs.join(', ')})`);
+      warnings.push(`Inconsistent address across schema: ${parts.join(' vs ')}.`);
+    }
+
+    function bestOf(map){
+      if(!map.size) return null;
+      let best=null, bestCount=-1;
+      map.forEach((pgs,val)=>{ if(pgs.length>bestCount){best=val; bestCount=pgs.length;} });
+      return best;
+    }
+    const brandName = bestOf(fieldValues.name) || (parsedPages[0].title.split('|')[0].split('-')[0].trim());
+    const schemaDescription = bestOf(fieldValues.description);
+    const phone = bestOf(fieldValues.telephone);
+    const priceRange = bestOf(fieldValues.priceRange);
+    const address = bestOf(addressValues);
+
+    let hoursLines = [];
+    if(hoursSets.length){
+      const chosen = hoursSets[0];
+      hoursLines = chosen.type === 'string' ? formatOpeningHoursString(chosen.data) : formatOpeningHoursSpec(chosen.data);
+    }
+
+    const allActionLinks = [];
+    const seenHref = new Set();
+    parsedPages.forEach(p=>{
+      p.actionLinks.forEach(l=>{
+        if(!seenHref.has(l.href)){
+          seenHref.add(l.href);
+          allActionLinks.push(l);
+        }
+      });
+    });
+
+    let summary = schemaDescription || parsedPages[0].metaDesc || `${brandName} — see individual pages below for details.`;
+    summary = firstSentence(summary, 280);
+
+    let out = '';
+    out += `# ${brandName}\n\n`;
+    out += `> ${summary}\n\n`;
+
+    const facts = [];
+    if(address) facts.push(`Address: ${address}`);
+    if(phone) facts.push(`Phone: ${phone}`);
+    if(hoursLines.length) facts.push(`Hours: ${hoursLines.join(', ')}`);
+    if(priceRange) facts.push(`Price range: ${priceRange}`);
+    sameAsLinks.forEach(s=>{
+      if(/facebook\.com/i.test(s)) facts.push(`Facebook: ${s}`);
+      else if(/instagram\.com/i.test(s)) facts.push(`Instagram: ${s}`);
+      else if(/twitter\.com|x\.com/i.test(s)) facts.push(`X/Twitter: ${s}`);
+      else facts.push(`Link: ${s}`);
+    });
+    allActionLinks.forEach(l=>{
+      facts.push(`${l.text}: ${l.href}`);
+    });
+
+    if(facts.length){
+      facts.forEach(f=> out += `- ${f}\n`);
+      out += `\n`;
+    }
+
+    out += `## Pages\n\n`;
+    parsedPages.forEach(p=>{
+      const url = p.url || '(no URL provided — add one and regenerate)';
+      const desc = firstSentence(p.metaDesc, 140) || firstSentence(p.title, 100) || 'No description available.';
+      const label = p.title ? p.title.split('|')[0].split(' - ')[0].trim() : url;
+      out += `- [${label}](${url}): ${desc}\n`;
+    });
+
+    outputPre.textContent = out;
+    outputWrap.classList.add('show');
+    window.__generatedLlmsTxt = out;
+
+    renderWarnings(warnings);
+    statusLine.textContent = `Generated from ${pages.length} page(s).`;
+  });
+
+  function renderWarnings(warnings){
+    const box = document.getElementById('warningsBox');
+    box.innerHTML = '';
+    warnings.forEach(w=>{
+      const d = document.createElement('div');
+      d.className = 'warnItem';
+      d.innerHTML = `<span class="dot">⚠</span><span>${w}</span>`;
+      box.appendChild(d);
+    });
+    if(!warnings.length){
+      const d = document.createElement('div');
+      d.className = 'okItem';
+      d.innerHTML = `<span>✓</span><span>No inconsistencies detected across the pages provided.</span>`;
+      box.appendChild(d);
+    }
+  }
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    if(!window.__generatedLlmsTxt) return;
+    navigator.clipboard.writeText(window.__generatedLlmsTxt).then(()=>{
+      this.textContent = 'Copied!';
+      setTimeout(()=> this.textContent='Copy', 1200);
+    });
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function(){
+    if(!window.__generatedLlmsTxt) return;
+    const blob = new Blob([window.__generatedLlmsTxt], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'llms.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+
+})();
+</script>
+</body>
+</html>
